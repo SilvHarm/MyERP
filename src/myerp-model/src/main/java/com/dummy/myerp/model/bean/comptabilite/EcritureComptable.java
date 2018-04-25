@@ -103,7 +103,6 @@ public class EcritureComptable {
 	 *
 	 * @return {@link BigDecimal}, {@link BigDecimal#ZERO} si aucun montant au débit
 	 */
-	// TODO à tester
 	public BigDecimal getTotalDebit() {
 		BigDecimal vRetour = BigDecimal.ZERO;
 		for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
@@ -111,7 +110,7 @@ public class EcritureComptable {
 				vRetour = vRetour.add(vLigneEcritureComptable.getDebit());
 			}
 		}
-		return vRetour;
+		return vRetour.stripTrailingZeros();
 	}
 	
 	
@@ -124,11 +123,11 @@ public class EcritureComptable {
 	public BigDecimal getTotalCredit() {
 		BigDecimal vRetour = BigDecimal.ZERO;
 		for (LigneEcritureComptable vLigneEcritureComptable : listLigneEcriture) {
-			if (vLigneEcritureComptable.getDebit() != null) {
-				vRetour = vRetour.add(vLigneEcritureComptable.getDebit());
+			if (vLigneEcritureComptable.getCredit() != null) {
+				vRetour = vRetour.add(vLigneEcritureComptable.getCredit());
 			}
 		}
-		return vRetour;
+		return vRetour.stripTrailingZeros();
 	}
 	
 	

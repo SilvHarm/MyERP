@@ -21,6 +21,60 @@ public class EcritureComptableTest {
 	
 	
 	@Test
+	public void getTotalCrebit() {
+		EcritureComptable vEcriture;
+		vEcriture = new EcritureComptable();
+		
+		Assert.assertSame(BigDecimal.ZERO, vEcriture.getTotalCredit());
+		
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, "1"));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, "8"));
+		vEcriture.getListLigneEcriture().add(this.createLigne(2, null, "6"));
+		Assert.assertEquals(BigDecimal.valueOf(15), vEcriture.getTotalCredit());
+		
+		vEcriture.getListLigneEcriture().clear();
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, "10"));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, "11"));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, "10"));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, null));
+		Assert.assertEquals(BigDecimal.valueOf(31), vEcriture.getTotalCredit());
+		
+		vEcriture.getListLigneEcriture().clear();
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, "10"));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, "11.55"));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, "0.45"));
+		Assert.assertEquals(BigDecimal.valueOf(22), vEcriture.getTotalCredit());
+	}
+	
+	
+	@Test
+	public void getTotalDebit() {
+		EcritureComptable vEcriture;
+		vEcriture = new EcritureComptable();
+		
+		Assert.assertSame(BigDecimal.ZERO, vEcriture.getTotalDebit());
+		
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, "1", null));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, "8", null));
+		vEcriture.getListLigneEcriture().add(this.createLigne(2, "6", null));
+		Assert.assertEquals(BigDecimal.valueOf(15), vEcriture.getTotalDebit());
+		
+		vEcriture.getListLigneEcriture().clear();
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, "10", null));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, "11", null));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, "10", null));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, null));
+		Assert.assertEquals(BigDecimal.valueOf(31), vEcriture.getTotalDebit());
+		
+		vEcriture.getListLigneEcriture().clear();
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, "10", null));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, "11.55", null));
+		vEcriture.getListLigneEcriture().add(this.createLigne(1, "0.55", null));
+		Assert.assertEquals(BigDecimal.valueOf(22.1), vEcriture.getTotalDebit());
+	}
+	
+	
+	@Test
 	public void isEquilibree() {
 		EcritureComptable vEcriture;
 		vEcriture = new EcritureComptable();
