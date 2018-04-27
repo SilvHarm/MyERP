@@ -3,12 +3,14 @@ package com.dummy.myerp.business.impl.manager;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.transaction.TransactionStatus;
+
 import com.dummy.myerp.business.contrat.manager.ComptabiliteManager;
 import com.dummy.myerp.business.impl.AbstractBusinessManager;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
@@ -25,6 +27,12 @@ import com.dummy.myerp.technical.exception.NotFoundException;
 public class ComptabiliteManagerImpl extends AbstractBusinessManager implements ComptabiliteManager {
 	
 	// ==================== Attributs ====================
+	
+	public final static String RG2_EXCEPTION = "L'écriture comptable n'est pas équilibrée.",
+			RG3_EXCEPTION = "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.",
+			RG5_CODE_EXCEPTION = "Le code journal doit être le même dans la référence",
+			RG5_DATE_EXCEPTION = "La date de l'écriture comptable doit être la même dans la référence",
+			VIOLATION_EXCEPTION = "L'écriture comptable ne respecte pas les règles de gestion.";
 	
 	
 	// ==================== Constructeurs ====================
@@ -97,20 +105,18 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 	 * @throws FunctionalException
 	 *            Si l'Ecriture comptable ne respecte pas les règles de gestion
 	 */
-	// TODO tests à compléter
 	protected void checkEcritureComptableUnit(EcritureComptable pEcritureComptable) throws FunctionalException {
 		// ===== Vérification des contraintes unitaires sur les attributs de l'écriture
 		Set<ConstraintViolation<EcritureComptable>> vViolations = getConstraintValidator().validate(pEcritureComptable);
 		if (!vViolations.isEmpty()) {
-			throw new FunctionalException("L'écriture comptable ne respecte pas les règles de gestion.",
-					new ConstraintViolationException("L'écriture comptable ne respecte pas les contraintes de validation",
-							vViolations));
+			throw new FunctionalException(VIOLATION_EXCEPTION, new ConstraintViolationException(
+					"L'écriture comptable ne respecte pas les contraintes de validation", vViolations));
 		}
 		
 		// ===== RG_Compta_2 : Pour qu'une écriture comptable soit valide, elle doit
 		// être équilibrée
 		if (!pEcritureComptable.isEquilibree()) {
-			throw new FunctionalException("L'écriture comptable n'est pas équilibrée.");
+			throw new FunctionalException(RG2_EXCEPTION);
 		}
 		
 		// ===== RG_Compta_3 : une écriture comptable doit avoir au moins 2 lignes
@@ -130,13 +136,24 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 		// On test le nombre de lignes car si l'écriture à une seule ligne
 		// avec un montant au débit et un montant au crédit ce n'est pas valable
 		if (pEcritureComptable.getListLigneEcriture().size() < 2 || vNbrCredit < 1 || vNbrDebit < 1) {
-			throw new FunctionalException(
-					"L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.");
+			throw new FunctionalException(RG3_EXCEPTION);
 		}
 		
-		// TODO ===== RG_Compta_5 : Format et contenu de la référence
+		// ===== RG_Compta_5 : Format et contenu de la référence
 		// vérifier que l'année dans la référence correspond bien à la date de
 		// l'écriture, idem pour le code journal...
+		if (pEcritureComptable.getReference() != null) {
+			String refTempo = pEcritureComptable.getReference();
+			
+			if (!refTempo.substring(3, 7).equals(pEcritureComptable.getDate().toString().substring(25, 29))) {
+				throw new FunctionalException(RG5_DATE_EXCEPTION);
+			}
+			
+			if (!refTempo.substring(0, 2).equals(pEcritureComptable.getJournal().getCode())) {
+				throw new FunctionalException(RG5_CODE_EXCEPTION);
+			}
+		}
+		
 	}
 	
 	

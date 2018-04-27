@@ -25,6 +25,7 @@ public class EcritureComptableTest {
 		EcritureComptable vEcriture;
 		vEcriture = new EcritureComptable();
 		
+		
 		Assert.assertSame(BigDecimal.ZERO, vEcriture.getTotalCredit());
 		
 		vEcriture.getListLigneEcriture().add(this.createLigne(1, null, "1"));
@@ -52,6 +53,7 @@ public class EcritureComptableTest {
 		EcritureComptable vEcriture;
 		vEcriture = new EcritureComptable();
 		
+		
 		Assert.assertSame(BigDecimal.ZERO, vEcriture.getTotalDebit());
 		
 		vEcriture.getListLigneEcriture().add(this.createLigne(1, "1", null));
@@ -78,6 +80,7 @@ public class EcritureComptableTest {
 	public void isEquilibree() {
 		EcritureComptable vEcriture;
 		vEcriture = new EcritureComptable();
+		
 		
 		vEcriture.setLibelle("Equilibrée");
 		vEcriture.getListLigneEcriture().add(this.createLigne(1, "200.50", null));
