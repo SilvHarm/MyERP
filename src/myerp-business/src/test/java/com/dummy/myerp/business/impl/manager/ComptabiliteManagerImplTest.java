@@ -3,10 +3,14 @@ package com.dummy.myerp.business.impl.manager;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.dummy.myerp.consumer.dao.ComptabiliteDaoMock;
+import com.dummy.myerp.consumer.dao.DaoProxyMock;
+import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
@@ -20,6 +24,33 @@ public class ComptabiliteManagerImplTest {
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
+	
+	
+	@BeforeClass
+	public static void setUpBeforeClass() throws Exception {
+		DaoProxy daoProxy = new DaoProxyMock(new ComptabiliteDaoMock());
+		
+		ComptabiliteManagerImpl.configure(null, daoProxy, null);
+	}
+	
+	
+	@Test
+	public void checkEcritureComptable() throws Exception {
+		EcritureComptable vEcritureComptable;
+		vEcritureComptable = new EcritureComptable();
+		vEcritureComptable.setId(22);
+		vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
+		vEcritureComptable.setDate(new Date());
+		vEcritureComptable.setReference("AC-" + vEcritureComptable.getDate().toString().substring(25, 29) + "/00022");
+		vEcritureComptable.setLibelle("Libelle");
+		vEcritureComptable.getListLigneEcriture()
+				.add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));
+		vEcritureComptable.getListLigneEcriture()
+				.add(new LigneEcritureComptable(new CompteComptable(2), null, null, new BigDecimal(123)));
+		
+		
+		manager.checkEcritureComptable(vEcritureComptable);
+	}
 	
 	
 	@Test
