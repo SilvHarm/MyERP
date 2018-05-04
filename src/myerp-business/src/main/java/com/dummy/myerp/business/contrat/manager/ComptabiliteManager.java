@@ -13,6 +13,14 @@ import com.dummy.myerp.technical.exception.FunctionalException;
  */
 public interface ComptabiliteManager {
 	
+	public final static String RG2_EXCEPTION = "L'écriture comptable n'est pas équilibrée.",
+			RG3_EXCEPTION = "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.",
+			RG5_CODE_EXCEPTION = "Le code journal doit être le même dans la référence",
+			RG5_DATE_EXCEPTION = "La date de l'écriture comptable doit être la même dans la référence",
+			RG6_EXCEPTION = "Une autre écriture comptable existe déjà avec la même référence.",
+			VIOLATION_EXCEPTION = "L'écriture comptable ne respecte pas les règles de gestion.";
+	
+	
 	/**
 	 * Renvoie la liste des comptes comptables.
 	 *

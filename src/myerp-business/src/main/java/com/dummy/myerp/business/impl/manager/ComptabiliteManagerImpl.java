@@ -28,12 +28,6 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 	
 	// ==================== Attributs ====================
 	
-	public final static String RG2_EXCEPTION = "L'écriture comptable n'est pas équilibrée.",
-			RG3_EXCEPTION = "L'écriture comptable doit avoir au moins deux lignes : une ligne au débit et une ligne au crédit.",
-			RG5_CODE_EXCEPTION = "Le code journal doit être le même dans la référence",
-			RG5_DATE_EXCEPTION = "La date de l'écriture comptable doit être la même dans la référence",
-			VIOLATION_EXCEPTION = "L'écriture comptable ne respecte pas les règles de gestion.";
-	
 	
 	// ==================== Constructeurs ====================
 	/**
@@ -177,7 +171,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 				// ou si elle ne correspond pas à l'écriture trouvée (id != idECRef),
 				// c'est qu'il y a déjà une autre écriture avec la même référence
 				if (pEcritureComptable.getId() == null || !pEcritureComptable.getId().equals(vECRef.getId())) {
-					throw new FunctionalException("Une autre écriture comptable existe déjà avec la même référence.");
+					throw new FunctionalException(RG6_EXCEPTION);
 				}
 			}
 			catch (NotFoundException vEx) {
