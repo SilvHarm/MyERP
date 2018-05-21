@@ -9,7 +9,7 @@ pipeline	{
 		stage("Checkout")	{
 			steps {
 				git url: "https://github.com/SilvHarm/MyERP",
-					branch: "${env.GIT_BRANCH}"
+					branch: "${if (env.GIT_BRANCH == "origin/master") {return "master"} else {return env.GIT_BRANCH}}"
 			}
 		}
 		
