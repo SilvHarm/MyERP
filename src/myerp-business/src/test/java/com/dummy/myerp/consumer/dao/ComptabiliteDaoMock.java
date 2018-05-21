@@ -1,6 +1,7 @@
 package com.dummy.myerp.consumer.dao;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class ComptabiliteDaoMock implements ComptabiliteDao {
 		vEcritureComptable.setId(22);
 		vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
 		vEcritureComptable.setDate(new Date());
-		vEcritureComptable.setReference("AC-" + vEcritureComptable.getDate().toString().substring(25, 29) + "/00022");
+		vEcritureComptable.setReference("AC-" + new SimpleDateFormat("yyyy").format(vEcritureComptable.getDate()) + "/00022");
 		vEcritureComptable.setLibelle("Libelle");
 		vEcritureComptable.getListLigneEcriture()
 				.add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));

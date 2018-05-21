@@ -3,6 +3,7 @@ package com.dummy.myerp.business.impl.manager;
 import static org.junit.Assert.fail;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.junit.Assert;
@@ -30,6 +31,7 @@ public class ComptabiliteManagerImplTest {
 	
 	private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 	private EcritureComptable vEcritureComptable;
+	private static SimpleDateFormat dateFormat;
 	
 	
 	@BeforeClass
@@ -37,6 +39,8 @@ public class ComptabiliteManagerImplTest {
 		DaoProxy daoProxy = new DaoProxyMock(new ComptabiliteDaoMock());
 		
 		ComptabiliteManagerImpl.configure(null, daoProxy, null);
+		
+		dateFormat = new SimpleDateFormat("yyyy");
 	}
 	
 	
@@ -47,7 +51,7 @@ public class ComptabiliteManagerImplTest {
 		vEcritureComptable.setId(22);
 		vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
 		vEcritureComptable.setDate(new Date());
-		vEcritureComptable.setReference("AC-" + vEcritureComptable.getDate().toString().substring(25, 29) + "/00022");
+		vEcritureComptable.setReference("AC-" + dateFormat.format(vEcritureComptable.getDate()) + "/00022");
 		vEcritureComptable.setLibelle("Libelle");
 		vEcritureComptable.getListLigneEcriture()
 				.add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));
@@ -95,7 +99,7 @@ public class ComptabiliteManagerImplTest {
 		vEcritureComptable.setReference(null);
 		manager.checkEcritureComptableUnit(vEcritureComptable);
 		
-		vEcritureComptable.setReference("AC-" + vEcritureComptable.getDate().toString().substring(25, 29) + "/00022");
+		vEcritureComptable.setReference("AC-" + dateFormat.format(vEcritureComptable.getDate()) + "/00022");
 		manager.checkEcritureComptableUnit(vEcritureComptable);
 	}
 	
@@ -146,7 +150,7 @@ public class ComptabiliteManagerImplTest {
 		thrown.expect(FunctionalException.class);
 		thrown.expectMessage(ComptabiliteManager.RG5_CODE_EXCEPTION);
 		
-		vEcritureComptable.setReference("AV-" + vEcritureComptable.getDate().toString().substring(25, 29) + "/00022");
+		vEcritureComptable.setReference("AV-" + dateFormat.format(vEcritureComptable.getDate()) + "/00022");
 		
 		manager.checkEcritureComptableUnit(vEcritureComptable);
 	}

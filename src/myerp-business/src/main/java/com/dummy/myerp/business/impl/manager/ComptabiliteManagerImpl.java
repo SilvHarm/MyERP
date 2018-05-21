@@ -1,6 +1,7 @@
 package com.dummy.myerp.business.impl.manager;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 
@@ -138,7 +139,7 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 		if (pEcritureComptable.getReference() != null) {
 			String refTempo = pEcritureComptable.getReference();
 			
-			if (!refTempo.substring(3, 7).equals(pEcritureComptable.getDate().toString().substring(25, 29))) {
+			if (!refTempo.substring(3, 7).equals(new SimpleDateFormat("yyyy").format(pEcritureComptable.getDate()))) {
 				throw new FunctionalException(RG5_DATE_EXCEPTION);
 			}
 			
