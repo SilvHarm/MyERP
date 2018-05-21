@@ -1,25 +1,38 @@
 pipeline	{
 	agent any
-	stages {
+	
+	tools {
+        maven 'maven-main' 
+    }
+	
+	stages	{
 		stage("Checkout")	{
 			steps {
-				git url: 'https://github.com/SilvHarm/MyERP'
+				git url: "https://github.com/SilvHarm/MyERP",
+					branch: "${env.GIT_BRANCH}"
 			}
 		}
 		
+		stage("Need Build ?")	{
+			steps {
+				script {
+					if (env.GIT_COMMIT == env.GIT_PREVIOUS_SUCCESSFUL_COMMIT) {
+						currentBuild.result = 'ABORTED'
+						error('Stopping early…')
+					}
+				}
+			}
+		}
+			
 		stage("Compile")	{
 			steps	{
-				withMaven(maven: 'maven-main')	{
-					sh "mvn -f ./src clean compile"
-				}
+				sh "mvn -f ./src clean compile"
 			}
 		}
-		
-		stage("Tests Unitaires")	{
+				
+		stage("Unit Testing")	{
 			steps	{
-				withMaven(maven: 'maven-main')	{
-					sh "mvn -f ./src test"
-				}
+				sh "mvn -f ./src test"
 			}
 		}
 	}
