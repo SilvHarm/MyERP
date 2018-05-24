@@ -35,5 +35,11 @@ pipeline	{
 				sh "mvn -f ./src test"
 			}
 		}
+		
+		stage("Integration Testing")	{
+			steps	{
+				sh "mvn -f ./src verify"
+			}
+		}
 	}
 }

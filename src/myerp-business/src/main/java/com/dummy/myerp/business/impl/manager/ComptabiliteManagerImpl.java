@@ -18,6 +18,7 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.FunctionalException;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
@@ -62,20 +63,35 @@ public class ComptabiliteManagerImpl extends AbstractBusinessManager implements 
 	/**
 	 * {@inheritDoc}
 	 */
-	// TODO à tester
 	@Override
 	public synchronized void addReference(EcritureComptable pEcritureComptable) {
-		// TODO à implémenter
-		// Bien se réferer à la JavaDoc de cette méthode !
-		/*
-		 * Le principe : 1. Remonter depuis la persitance la dernière valeur de la
-		 * séquence du journal pour l'année de l'écriture (table
-		 * sequence_ecriture_comptable) 2. * S'il n'y a aucun enregistrement pour le
-		 * journal pour l'année concernée : 1. Utiliser le numéro 1. Sinon : 1. Utiliser
-		 * la dernière valeur + 1 3. Mettre à jour la référence de l'écriture avec la
-		 * référence calculée (RG_Compta_5) 4. Enregistrer (insert/update) la valeur de
-		 * la séquence en persitance (table sequence_ecriture_comptable)
-		 */
+		int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(pEcritureComptable.getDate()));
+		String codeJournal = pEcritureComptable.getJournal().getCode();
+		
+		SequenceEcritureComptable sequence = getDaoProxy().getComptabiliteDao()
+				.getSequenceEcritureComptableByCodeYear(codeJournal, year);
+		
+		String reference;
+		if (sequence == null) {
+			sequence = new SequenceEcritureComptable(year, 1);
+			reference = "00001";
+			
+			getDaoProxy().getComptabiliteDao().insertSequenceEcritureComptable(codeJournal, sequence);
+		}
+		else {
+			sequence.incrementDerniereValeur(1);
+			reference = Integer.toString(sequence.getDerniereValeur());
+			
+			while (reference.length() < 5) {
+				reference = "0" + reference;
+			}
+			
+			getDaoProxy().getComptabiliteDao().updateSequenceEcritureComptable(codeJournal, sequence);
+		}
+		
+		reference = codeJournal + "-" + year + "/" + reference;
+		
+		pEcritureComptable.setReference(reference);
 	}
 	
 	

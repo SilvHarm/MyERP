@@ -56,6 +56,15 @@ public class SequenceEcritureComptable {
 	
 	
 	// ==================== Méthodes ====================
+	/**
+	 * Ajoute la valeur fournie à derniereValeur
+	 * @param toAdd
+	 */
+	public void incrementDerniereValeur(int toAdd) {
+		derniereValeur += toAdd;
+	}
+	
+	
 	@Override
 	public String toString() {
 		final StringBuilder vStB = new StringBuilder(this.getClass().getSimpleName());

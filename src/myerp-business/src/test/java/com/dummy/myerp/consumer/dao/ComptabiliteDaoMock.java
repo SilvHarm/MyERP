@@ -10,6 +10,7 @@ import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.model.bean.comptabilite.SequenceEcritureComptable;
 import com.dummy.myerp.technical.exception.NotFoundException;
 
 
@@ -24,6 +25,26 @@ public class ComptabiliteDaoMock implements ComptabiliteDao {
 	@Override
 	public List<JournalComptable> getListJournalComptable() {
 		return null;
+	}
+	
+	
+	@Override
+	public SequenceEcritureComptable getSequenceEcritureComptableByCodeYear(String codeJournal, int year) {
+		return new SequenceEcritureComptable(Integer.getInteger(new SimpleDateFormat("yyyy").format(new Date())), 1024);
+	}
+	
+	
+	@Override
+	public void insertSequenceEcritureComptable(String codeJournal,
+			SequenceEcritureComptable pSequenceEcritureComptable) {
+		
+	}
+	
+	
+	@Override
+	public void updateSequenceEcritureComptable(String codeJournal,
+			SequenceEcritureComptable pSequenceEcritureComptable) {
+		
 	}
 	
 	
@@ -45,7 +66,8 @@ public class ComptabiliteDaoMock implements ComptabiliteDao {
 		vEcritureComptable.setId(22);
 		vEcritureComptable.setJournal(new JournalComptable("AC", "Achat"));
 		vEcritureComptable.setDate(new Date());
-		vEcritureComptable.setReference("AC-" + new SimpleDateFormat("yyyy").format(vEcritureComptable.getDate()) + "/00022");
+		vEcritureComptable
+				.setReference("AC-" + new SimpleDateFormat("yyyy").format(vEcritureComptable.getDate()) + "/00022");
 		vEcritureComptable.setLibelle("Libelle");
 		vEcritureComptable.getListLigneEcriture()
 				.add(new LigneEcritureComptable(new CompteComptable(1), null, new BigDecimal(123), null));

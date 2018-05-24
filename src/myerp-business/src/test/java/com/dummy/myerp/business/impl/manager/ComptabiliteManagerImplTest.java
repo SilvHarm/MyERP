@@ -59,6 +59,11 @@ public class ComptabiliteManagerImplTest {
 				.add(new LigneEcritureComptable(new CompteComptable(2), null, null, new BigDecimal(123)));
 	}
 	
+	@Test
+	public void addReference() {
+		manager.addReference(vEcritureComptable);
+	}
+	
 	
 	@Test
 	public void checkEcritureComptable() throws Exception {
