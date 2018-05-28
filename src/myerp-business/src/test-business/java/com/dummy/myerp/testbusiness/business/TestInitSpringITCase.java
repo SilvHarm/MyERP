@@ -8,12 +8,12 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Classe de test de l'initialisation du contexte Spring
  */
-public class TestInitSpring extends BusinessTestCase {
+public class TestInitSpringITCase extends BusinessITCase {
 	
 	/**
 	 * Constructeur.
 	 */
-	public TestInitSpring() {
+	public TestInitSpringITCase() {
 		super();
 	}
 	
@@ -23,8 +23,8 @@ public class TestInitSpring extends BusinessTestCase {
 	 */
 	@Test
 	public void testInit() {
-		SpringRegistry.init();
-		assertNotNull(SpringRegistry.getBusinessProxy());
-		assertNotNull(SpringRegistry.getTransactionManager());
+		SpringRegistryITCase.init();
+		assertNotNull(SpringRegistryITCase.getBusinessProxy());
+		assertNotNull(SpringRegistryITCase.getTransactionManager());
 	}
 }

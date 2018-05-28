@@ -11,14 +11,14 @@ import com.dummy.myerp.business.impl.TransactionManager;
 /**
  * Registre des Beans Spring.
  */
-public final class SpringRegistry {
+public final class SpringRegistryITCase {
 	
 	/** Logger Log4j pour la classe */
-	private static final Logger LOGGER = LogManager.getLogger(SpringRegistry.class);
+	private static final Logger LOGGER = LogManager.getLogger(SpringRegistryITCase.class);
 	
 	
 	/** Instance unique de la classe (design pattern Singleton) */
-	private static final SpringRegistry INSTANCE = new SpringRegistry();
+	private static final SpringRegistryITCase INSTANCE = new SpringRegistryITCase();
 	
 	
 	/** Nom des fichiers de contexte de l'application */
@@ -34,21 +34,21 @@ public final class SpringRegistry {
 	/**
 	 * Constructeur.
 	 */
-	private SpringRegistry() {
+	private SpringRegistryITCase() {
 		super();
-		SpringRegistry.LOGGER.debug("[DEBUT] SpringRegistry() - Initialisation du contexte Spring");
-		this.contextAppli = new ClassPathXmlApplicationContext(SpringRegistry.CONTEXT_APPLI_LOCATION);
-		SpringRegistry.LOGGER.debug("[FIN] SpringRegistry() - Initialisation du contexte Spring");
+		SpringRegistryITCase.LOGGER.debug("[DEBUT] SpringRegistryITCase() - Initialisation du contexte Spring");
+		this.contextAppli = new ClassPathXmlApplicationContext(SpringRegistryITCase.CONTEXT_APPLI_LOCATION);
+		SpringRegistryITCase.LOGGER.debug("[FIN] SpringRegistryITCase() - Initialisation du contexte Spring");
 	}
 	
 	
 	/**
 	 * Renvoie l'instance unique de la classe (design pattern Singleton).
 	 *
-	 * @return SpringRegistry
+	 * @return SpringRegistryITCase
 	 */
-	protected static final SpringRegistry getInstance() {
-		return SpringRegistry.INSTANCE;
+	protected static final SpringRegistryITCase getInstance() {
+		return SpringRegistryITCase.INSTANCE;
 	}
 	
 	
@@ -72,9 +72,9 @@ public final class SpringRegistry {
 	 * @return Object
 	 */
 	protected static Object getBean(String pBeanId) {
-		SpringRegistry.LOGGER.debug("[DEBUT] SpringRegistry.getBean() - Bean ID : " + pBeanId);
-		Object vBean = SpringRegistry.getInstance().contextAppli.getBean(pBeanId);
-		SpringRegistry.LOGGER.debug("[FIN] SpringRegistry.getBean() - Bean ID : " + pBeanId);
+		SpringRegistryITCase.LOGGER.debug("[DEBUT] SpringRegistryITCase.getBean() - Bean ID : " + pBeanId);
+		Object vBean = SpringRegistryITCase.getInstance().contextAppli.getBean(pBeanId);
+		SpringRegistryITCase.LOGGER.debug("[FIN] SpringRegistryITCase.getBean() - Bean ID : " + pBeanId);
 		return vBean;
 	}
 	
@@ -85,7 +85,7 @@ public final class SpringRegistry {
 	 * @return {@link BusinessProxy}
 	 */
 	public static BusinessProxy getBusinessProxy() {
-		return (BusinessProxy) SpringRegistry.getBean("BusinessProxy");
+		return (BusinessProxy) SpringRegistryITCase.getBean("BusinessProxy");
 	}
 	
 	
@@ -95,6 +95,6 @@ public final class SpringRegistry {
 	 * @return {@link TransactionManager}
 	 */
 	public static TransactionManager getTransactionManager() {
-		return (TransactionManager) SpringRegistry.getBean("TransactionManager");
+		return (TransactionManager) SpringRegistryITCase.getBean("TransactionManager");
 	}
 }

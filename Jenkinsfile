@@ -35,5 +35,13 @@ pipeline	{
 				sh "mvn -f ./src test"
 			}
 		}
+		
+		stage("Integration Testing")	{
+			steps	{
+				sh "mvn -f ./src verify -P test-consumer -Dskip.surefire.tests"
+				
+				sh "mvn -f ./src verify -P test-business -Dskip.surefire.tests"
+			}
+		}
 	}
 }
