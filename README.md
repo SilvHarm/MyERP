@@ -5,10 +5,13 @@
 *   `doc` : documentation
 *   `docker` : répertoire relatifs aux conteneurs _docker_ utiles pour le projet
     *   `dev` : environnement de développement
+	 *   `Jenkins_Config` : configuration Jenkins à utiliser pour les tests
 *   `src` : code source de l'application
 
 
 ## Environnement de développement
+
+Necessite d'avoir une version de docker similaire voire identique sur l'hôte et l'image.
 
 Les composants nécessaires lors du développement sont disponibles via des conteneurs _docker_.
 L'environnement de développement est assemblé grâce à _docker-compose_
