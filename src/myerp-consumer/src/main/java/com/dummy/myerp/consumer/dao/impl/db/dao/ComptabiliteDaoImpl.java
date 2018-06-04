@@ -105,8 +105,13 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		vSqlParams.addValue("journal_code", codeJournal);
 		vSqlParams.addValue("annee", year);
 		
-		return vJdbcTemplate.queryForObject(SQLgetSequenceEcritureComptableByCodeYear, vSqlParams,
-				new BeanPropertyRowMapper<SequenceEcritureComptable>(SequenceEcritureComptable.class));
+		try {
+			return vJdbcTemplate.queryForObject(SQLgetSequenceEcritureComptableByCodeYear, vSqlParams,
+					new BeanPropertyRowMapper<SequenceEcritureComptable>(SequenceEcritureComptable.class));
+		}
+		catch (EmptyResultDataAccessException vEx) {
+			return null;
+		}
 	}
 	
 	/** SQLinsertSequenceEcritureComptable */
