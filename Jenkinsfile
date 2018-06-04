@@ -66,7 +66,8 @@ pipeline	{
 				always {
 					echo "Post Stage: Stopping Test Database..."
 					sh "cd docker/dev \
-						&& docker-compose stop"
+						&& docker-compose stop \
+						&& docker-compose rm -v"
 				}
 			}
 		}
