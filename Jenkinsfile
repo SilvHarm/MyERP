@@ -38,7 +38,7 @@ pipeline	{
 
 		stage("Integration Testing")	{
 			steps	{
-				echo "Starting Test Database..."
+				echo "Starting testing environment..."
 				sh "cd docker/dev \
 					&& docker-compose up &"
 
@@ -49,22 +49,23 @@ pipeline	{
 				echo "Testing consumer module..."
 				sh "mvn -f ./src verify -P test-consumer -Dskip.surefire.tests"
 
-				echo "Resetting Test Database..."
+				echo "Resetting testing environment..."
 				sh "cd docker/dev \
 					&& docker-compose stop \
-					&& docker-compose rm -v \
+					&& docker-compose rm -v"
+				sh "cd docker/dev \
 					&& docker-compose up &"
 
 				// same as previous sleep
 				sleep 10
 
 				echo "Testing business module..."
-				sh "mvn -f ./src verify -P test-business -Dskip.surefire.tests"
+				sh "mvn -f ./src clean verify -P test-business -Dskip.surefire.tests"
 			}
 
 			post {
 				always {
-					echo "Post Stage: Stopping Test Database..."
+					echo "Post Stage: Stopping testing environment..."
 					sh "cd docker/dev \
 						&& docker-compose stop \
 						&& docker-compose rm -v"

@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
 import com.dummy.myerp.consumer.dao.ComptabiliteDaoMock;
 import com.dummy.myerp.consumer.dao.DaoProxyMock;
 import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
