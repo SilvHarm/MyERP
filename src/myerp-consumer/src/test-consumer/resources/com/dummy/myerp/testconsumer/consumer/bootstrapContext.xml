@@ -3,12 +3,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
 
-	<!-- ========== Consumer ========== -->
 	<import resource="classpath:com/dummy/myerp/consumer/applicationContext.xml"/>
-
-
-	<!-- ========== Business ========== -->
-	<import resource="classpath:com/dummy/myerp/business/applicationContext.xml"/>
 
 
 	<!-- Bean overwritte for test purpose -->
