@@ -6,20 +6,15 @@ import java.util.Date;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import com.dummy.myerp.business.impl.manager.ComptabiliteManagerImpl;
-import com.dummy.myerp.consumer.dao.ComptabiliteDaoMock;
-import com.dummy.myerp.consumer.dao.DaoProxyMock;
-import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
 import com.dummy.myerp.model.bean.comptabilite.EcritureComptable;
 import com.dummy.myerp.model.bean.comptabilite.JournalComptable;
 import com.dummy.myerp.model.bean.comptabilite.LigneEcritureComptable;
+import com.dummy.myerp.testbusiness.business.BusinessITCase;
 
-public class ComptabiliteManagerImplITCase {
+public class ComptabiliteManagerImplITCase extends BusinessITCase {
 	
 	private ComptabiliteManagerImpl manager = new ComptabiliteManagerImpl();
 	private EcritureComptable vEcritureComptable;
