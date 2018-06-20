@@ -40,6 +40,7 @@ pipeline	{
 			steps	{
 				echo "Starting testing environment..."
 				sh "cd docker/dev \
+					&& docker-compose rm -f -s -v \
 					&& docker-compose up -d"
 
 				// sleep to let database finish to startup before testing
@@ -51,9 +52,7 @@ pipeline	{
 
 				echo "Resetting testing environment..."
 				sh "cd docker/dev \
-					&& docker-compose stop \
-					&& docker-compose rm -v"
-				sh "cd docker/dev \
+					&& docker-compose rm -f -s -v \
 					&& docker-compose up -d"
 
 				// same as previous sleep
@@ -67,8 +66,7 @@ pipeline	{
 				always {
 					echo "Post Stage: Stopping testing environment..."
 					sh "cd docker/dev \
-						&& docker-compose stop \
-						&& docker-compose rm -v"
+						&& docker-compose rm -f -s -v"
 				}
 			}
 		}
