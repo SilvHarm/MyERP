@@ -63,7 +63,7 @@ Expliquation des différentes variables utilisés dans les commandes _docker_ :
 
 ### Création de l'image docker
 
-	cd docker
+	cd docker/Jenkins
 	docker build -t <image_name> .
 
 
