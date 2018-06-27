@@ -8,23 +8,23 @@ import com.dummy.myerp.business.impl.TransactionManager;
 /**
  * Classe mère des classes de test d'intégration de la couche Business
  */
-public abstract class BusinessTestCase {
+public abstract class BusinessITCase {
 	
 	static {
-		SpringRegistry.init();
+		SpringRegistryITCase.init();
 	}
 	
 	/** {@link BusinessProxy} */
-	private static final BusinessProxy BUSINESS_PROXY = SpringRegistry.getBusinessProxy();
+	private static final BusinessProxy BUSINESS_PROXY = SpringRegistryITCase.getBusinessProxy();
 	/** {@link TransactionManager} */
-	private static final TransactionManager TRANSACTION_MANAGER = SpringRegistry.getTransactionManager();
+	private static final TransactionManager TRANSACTION_MANAGER = SpringRegistryITCase.getTransactionManager();
 	
 	
 	// ==================== Constructeurs ====================
 	/**
 	 * Constructeur.
 	 */
-	public BusinessTestCase() {}
+	public BusinessITCase() {}
 	
 	
 	// ==================== Getters/Setters ====================
