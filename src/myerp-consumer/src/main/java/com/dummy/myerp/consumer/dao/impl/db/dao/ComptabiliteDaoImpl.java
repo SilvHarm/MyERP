@@ -4,7 +4,6 @@ import java.sql.Types;
 import java.util.List;
 
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,6 +13,7 @@ import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.CompteComptab
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.EcritureComptableRM;
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.JournalComptableRM;
 import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.LigneEcritureComptableRM;
+import com.dummy.myerp.consumer.dao.impl.db.rowmapper.comptabilite.SequenceEcritureComptableRM;
 import com.dummy.myerp.consumer.db.AbstractDbConsumer;
 import com.dummy.myerp.consumer.db.DataSourcesEnum;
 import com.dummy.myerp.model.bean.comptabilite.CompteComptable;
@@ -412,8 +412,9 @@ public class ComptabiliteDaoImpl extends AbstractDbConsumer implements Comptabil
 		vSqlParams.addValue("journal_code", codeJournal);
 		vSqlParams.addValue("annee", year);
 		
-		return vJdbcTemplate.queryForObject(SQLgetSequenceEcritureComptableByCodeYear, vSqlParams,
-				new BeanPropertyRowMapper<SequenceEcritureComptable>(SequenceEcritureComptable.class));
+		SequenceEcritureComptableRM vRM = new SequenceEcritureComptableRM();
+		
+		return vJdbcTemplate.queryForObject(SQLgetSequenceEcritureComptableByCodeYear, vSqlParams, vRM);
 	}
 	
 	// ==================== SequenceEcritureComptable - UPDATE ====================
