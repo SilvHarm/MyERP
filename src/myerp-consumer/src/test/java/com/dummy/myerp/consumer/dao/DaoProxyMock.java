@@ -6,7 +6,6 @@ import com.dummy.myerp.consumer.dao.contrat.DaoProxy;
 
 public class DaoProxyMock implements DaoProxy {
 	
-	
 	private ComptabiliteDao comptabiliteDao;
 	
 	
