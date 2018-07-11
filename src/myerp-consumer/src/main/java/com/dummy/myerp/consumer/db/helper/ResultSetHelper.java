@@ -83,7 +83,7 @@ public abstract class ResultSetHelper {
 	public static Date getDate(ResultSet pRS, String pColName) throws SQLException {
 		Date vDate = pRS.getDate(pColName);
 		if (vDate != null) {
-			vDate = DateUtils.truncate(vDate, Calendar.DATE);
+			vDate = DateUtils.truncate(vDate, Calendar.HOUR);
 		}
 		return vDate;
 	}
